@@ -16,7 +16,7 @@ $ cd ${NEO4PY_ROOT}/neo4j
 $ ./build-install.sh ${PATH_TO_DOWNLOAD_OF_NEO4J}
 
 (This may require sudo, depending on your configuration)
-For example: $ sudo ./build-install.sh ~/src/neo4j-community-1.3
+For example: $ sudo ./build-install.sh ~/downloads/neo4j-community-1.3
 
 2) 
 $ cd ..
