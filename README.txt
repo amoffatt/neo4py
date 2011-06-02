@@ -73,7 +73,7 @@ Creating a node::			(must be within a transaction!)
 
 Specify properties for new node::
 
-  >>> n = gdb.node(petals=5, color="Red", height=5.5)			#support for number or string array properties is not yet supported.
+  >>> n = gdb.node(petals=5, color="Red", height=5.5)			#support for number or string array properties is not yet added
 
 Accessing node by id::
 
@@ -188,7 +188,7 @@ In Progress
 Notes
 -----
 
-This is a work in progress.  Please let me know if stuff in this document fails… or doesn't seem to be true.
+This is a work in progress.  Please let me know if stuff in this document fails or doesn't seem to be true.
 
 Thanks much.
 
