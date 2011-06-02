@@ -1,4 +1,3 @@
-
 Neo4j Python Bindings
 ========================
 
@@ -17,7 +16,7 @@ $ cd ${NEO4PY_ROOT}/neo4j
 $ ./build-install.sh ${PATH_TO_DOWNLOAD_OF_NEO4J}
 
 (This may require sudo, depending on your configuration)
-For example: $ sudo ./build-install.sh ~/src/neo4j-community-1.3
+For example: $ sudo ./build-install.sh ~/downloads/neo4j-community-1.3
 
 2) 
 $ cd ..
@@ -31,7 +30,7 @@ and install
 
 $ python setup.py install
 
-(May also need to be sudden)
+(May also need to sudo)
 
 
 Getting started
@@ -91,10 +90,8 @@ Accessing properties::
   # Or, with a default
   >>> value = n.get('key', 'default')
 
-
-Besides, a Node object has other attributes::
-
-  >>> for prop, value in n.iteritems()		# loop through node properties
+  >>> for prop in n: do_something(prop)
+  >>> for prop, value in n.iteritems(): do_someting(prop,value)		# loop through node properties
   
   >>>more_props = { "name" : "Jack", "occupation" : "Pilot" }
   >>>n1.update(more_props)
@@ -111,55 +108,64 @@ Create relationship::
   # Or
   >>> n1.relationships("Likes")(n2, how_much="A lot") 	# Usefull when the name of
                                           			# relationship is stored in a variable.
-					  			# This may change thoughÉobscure syntax
+					  			# This syntax may change though... seems obscure?
 
 
 The creation returns a Relationship object, which has properties accessible like nodes.
 
-
   >>> rel = n1.Knows(n2, since=123456789)
+  >>> rel['since']
+123456789
   
-  >>> rel.start		# start node (n1)
+Additional attributes:
 
-  
+  >>> rel.start		# start node (n1)
   >>> rel.end		# end node (n2)
   
   >>> rel.type
   'Knows'
-  
-  >>> rel['since']
-  123456789
 
 
 
 Others functions over 'relationships' attribute are possible. Like get all,
-incoming or outgoing relationships (typed or not)::
+incoming or outgoing relationships (typed or not):
 
   >>> rels = list(n1.relationships())
 
   
   >>> rels = list(n1.relationships("Knows", "Likes").incoming)
   
-  >>> rels = list(n1.Knows.outgoing.single)
+  >>> rel = n1.Knows.outgoing.single
 
 
 Traversals
 ----------
 
-In progress
+In progress.  Much like neo4j.py
 See tests (neo4py/testing/graph_core.py)
 
+  >>> from neo4py.core import Direction
+  >>> from neo4py.traversal import Traverser, Stop, Returnable, Order
 
-Indexes
+  class MyTraverser(Traverser):						####  UNTESTED  ####
+      types = [Direction.Incoming.Knows, Direction.Undirected.Likes]
+      is_stop = lambda pos: pos.node == my_node		#can use a python method
+							#pos is a TraversalPosition object
+      is_returnable = Returnable.ALL			#or a java defined ReturnableEvaluator/StopEvaluator
+							# (these are faster)
+      order = Order.DEPTH_FIRST
+
+
+Indices
 -------
 
 See tests (neo4py/testing/graph_core.py)
 
-  >>> node_idx = gdb.node_indices.create("My node index", fulltext=True)		# create an new fulltext index
-											# Will fail index with name already exists
+  >>> node_idx = gdb.node_indices.create("My node index", fulltext=True)		#create an new fulltext index
+											#Will fail index with name already exists
   >>> node_idx = gdb.node_indices["My node index"]			#retrieve already created index
 
-  >>> "That index" in gdb.node_indices					# test if index exists
+  >>> "That index" in gdb.node_indices					#test if index exists
 False
   >>> "My node index" in gdb.node_indices
 True
