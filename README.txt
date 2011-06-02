@@ -1,4 +1,3 @@
-
 Neo4j Python Bindings
 ========================
 
@@ -31,7 +30,7 @@ and install
 
 $ python setup.py install
 
-(May also need to be sudden)
+(May also need to sudo)
 
 
 Getting started
@@ -111,7 +110,7 @@ Create relationship::
   # Or
   >>> n1.relationships("Likes")(n2, how_much="A lot") 	# Usefull when the name of
                                           			# relationship is stored in a variable.
-					  			# This may change thoughÉobscure syntax
+					  			# This may change thoughï¿½obscure syntax
 
 
 The creation returns a Relationship object, which has properties accessible like nodes.
