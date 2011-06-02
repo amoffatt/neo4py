@@ -45,6 +45,7 @@ class Direction:
     Incoming = _Direction(neo4j.Direction.INCOMING)
     Outgoing = _Direction(neo4j.Direction.OUTGOING)
     Both = _Direction(neo4j.Direction.BOTH)
+    Undirected = Both
 
 class RelationshipType(object):
     def __init__(self, type):
