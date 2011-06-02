@@ -1,0 +1,9 @@
+Aaron Moffatt
+
+
+** Much Thanks To: **
+
+* Tobias Ivarsson - for neo4j.py bindings on which this is based.
+* Neo4j Team - for obvious reasons.
+* Guido van Rossum - also for obvious reasons
+
