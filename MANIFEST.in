@@ -1,0 +1,2 @@
+include *.txt
+include java/lib/neo4j-neo4py-exts.jar

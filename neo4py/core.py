@@ -120,18 +120,12 @@ class PropertyContainer(object):
     def __len__(self):      ##NOTE not efficient, but caching would also cause issues
         cnt = 0
         i = iter(self)
-        try:
-            while True:
-                i.next()
+        for x in i:
                 cnt += 1
-        except StopIteration:
-            pass
         return cnt
     
     def __str__(self):
-        return "{%s}" % (
-                        ', '.join(["%s:'%s'" % (k[:20],v[:20]) for k,v in islice(self.iteritems(),3)])
-                    )
+            return "{%d properties}" % len(self)
     
 class Node(PropertyContainer):
     def __init__(self, java_node):
