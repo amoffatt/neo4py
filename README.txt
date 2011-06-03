@@ -16,9 +16,21 @@ Thanks much.
 Installation
 ------------
 
-Set NEO4J_HOME environment variable to a download of Neo4j:
+Install JCC:
+
+$ easy_install jcc
+
+Download and unpack neo4j somewhere (http://neo4j.org/download/)
+Currently only version 1.3 is supported
+
+Set NEO4J_HOME environment variable to this download of Neo4j:
 
 $ export NEO4J_HOME=~/downloads/neo4j-community-1.3
+
+
+Enter the Neo4py package directory:
+
+$ cd the/directory/with/this/readme
 
 Build C++ wrappers with JCC:
 
@@ -44,7 +56,7 @@ Simplest way is to use the 'global' graph.
   >>> gdb.shutdown()
 
 This global graph may be accessed from anywhere after being initialized with
->>> gdb = neo.get_graph()
+  >>> gdb = neo.get_graph()
 
 
 Transactions
@@ -54,19 +66,20 @@ Transactions are handled differently than in neo4j.py
 
   >>> tx, created = gdb.get_tx()
 
-If created is True, it is the responsibility of this scope to commit the transaction when done with any of
+If created is True, it is the responsibility of this scope to commit the transaction when done it:
 
-  >>> tx.finish(True)	# success
+  >>> tx.finish(True)	# success - commit changes to database
   >>> tx.finish(False)	# failure - rollback changes
 
   >>> tx.success()		# or .failure()
   >>> tx.finish()		# it doesn't matter if True of False is passed here -- it will be ignored
 
 
-Nodes, Relationships and Properties
+Nodes, Relationships and Properties (Beginning of fun stuff)
 ----------------------------------
 
-Much of the syntax is compatible with neo4j.py
+** Not all syntax is neo4j.py compatible **
+
 
 Creating a node::			(must be within a transaction!)
 

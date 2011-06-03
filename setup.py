@@ -9,6 +9,16 @@ import shutil
 from distutils.core import setup
 import neo4py as __info__
 
+try:
+        from jcc import cpp
+except ImportError:
+        print """
+Could not find jcc. It must be installed first:
+
+easy_install jcc
+"""
+        sys.exit(1)
+
 NEO4J_JARS = {
 	"1.3" : [
 		"neo4j-kernel-1.3.jar",
@@ -95,7 +105,6 @@ else:
 		
 
 if build_wrappers:
-	from jcc import cpp
 	build_info_file = join('build', "NEO4J_HOME.txt")
 	
 	if cmd == 'build':
