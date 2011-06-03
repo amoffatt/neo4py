@@ -6,18 +6,24 @@ import platform
 import runpy
 import shutil
 
-from distutils.core import setup
 import neo4py as __info__
 
 try:
-        from jcc import cpp
+	from setuptools import setup
+	print 'Using setuptools'
 except ImportError:
-        print """
+	from distutils.core import setup
+	print 'Could not find setuptools.  Falling back to distutils.'
+	try:
+		import jcc
+	except ImportError:
+		print """
 Could not find jcc. It must be installed first:
 
 easy_install jcc
 """
-        sys.exit(1)
+		sys.exit(1)
+
 
 NEO4J_JARS = {
 	"1.3" : [
@@ -64,7 +70,7 @@ setup(
 	packages=[
 		__info__.__name__,
 	],
-	requires=[
+	install_requires=[
 		"jcc",
 	]
 )
@@ -105,6 +111,7 @@ else:
 		
 
 if build_wrappers:
+	from jcc import cpp
 	build_info_file = join('build', "NEO4J_HOME.txt")
 	
 	if cmd == 'build':
