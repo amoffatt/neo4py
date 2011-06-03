@@ -17,10 +17,29 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-__license__ = "AGPL 3"
-__version__ = '0.1'
-__author__ = 'Aaron Moffatt'
-__author_email__ = 'contact@aaronmoffatt.com'
-__description__ = "Python bindings for Neo4j graph database"
-__url__ = "https://github.com/OneSaidWho/neo4py"
-__status__ = "Development"
+import os
+from graph import GraphDatabase
+
+__all__ = "GraphDatabase", "init_graph", "get_graph"
+
+_global_graph = None
+_global_graph_dir = None
+
+def init_graph(db_dir):
+    global _global_graph, _global_graph_dir
+    if not db_dir:
+        raise ValueError("Must specify graph directory")
+    
+    abs_db_dir = os.path.abspath(db_dir)
+    if _global_graph_dir != abs_db_dir:
+        if _global_graph:
+            _global_graph.shutdown()
+        _global_graph = GraphDatabase(db_dir)
+        _global_graph_dir = abs_db_dir
+    elif not _global_graph.running:
+        _global_graph = GraphDatabase(db_dir)
+        
+    return _global_graph
+
+def get_graph():
+    return _global_graph

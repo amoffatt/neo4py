@@ -5,44 +5,46 @@ Neo4j Python Bindings
 
 Only tested with Neo4j 1.3 on OSX Snow Leopard, Python 2.6
 
+
+Notice
+------
+This is a work in progress.  Please let me know if stuff in this document fails or doesn't seem to be true.
+
+Thanks much.
+
+
 Installation
 ------------
 
-Two step process
+Set NEO4J_HOME environment variable to a download of Neo4j:
 
-1) Build Neo4j native bindings with JCC (jcc must be installed)
+$ export NEO4J_HOME=~/downloads/neo4j-community-1.3
 
-$ cd ${NEO4PY_ROOT}/neo4j
-$ ./build-install.sh ${PATH_TO_DOWNLOAD_OF_NEO4J}
+Build C++ wrappers with JCC:
 
-(This may require sudo, depending on your configuration)
-For example: $ sudo ./build-install.sh ~/downloads/neo4j-community-1.3
+$ python setup.py build
 
-2) 
-$ cd ..
-
-Run some tests:
-$ python neo4py/testing/graph_core.py
-
-Hopefully no errors!  If there are, send me the output.
-
-and install
+Install (may require sudo-ness):
 
 $ python setup.py install
 
-(May also need to sudo)
+
+Run some tests:
+$ python test/test_graph_core.py
+
+Hopefully no errors!  If there are, send me the tracebacks :)
 
 
 Getting started
 ---------------
 
 Simplest way is to use the 'global' graph.
-  >>> import neo4py
-  >>> gdb = neo4py.init_graph('test-graph.neo4j')
+  >>> from neo4py import neo
+  >>> gdb = neo.init_graph('test-graph.neo4j')
   >>> gdb.shutdown()
 
 This global graph may be accessed from anywhere after being initialized with
->>> gdb = neo4py.get_graph()
+>>> gdb = neo.get_graph()
 
 
 Transactions
@@ -52,7 +54,7 @@ Transactions are handled differently than in neo4j.py
 
   >>> tx, created = gdb.get_tx()
 
-If created is True, it is the responsibility of this scope to commit the transaction with any of
+If created is True, it is the responsibility of this scope to commit the transaction when done with any of
 
   >>> tx.finish(True)	# success
   >>> tx.finish(False)	# failure - rollback changes
@@ -74,12 +76,12 @@ Specify properties for new node::
 
   >>> n = gdb.node(petals=5, color="Red", height=5.5)			#support for number or string array properties is not yet added
 
-Accessing node by id::
+Accessing node by id:
 
   >>> n = gdb.nodes[14]
   
 
-Accessing properties::
+Accessing properties:
 
   >>> value = n['key'] # Get property value
   
@@ -147,9 +149,9 @@ See tests (neo4py/testing/graph_core.py)
   >>> from neo4py.core import Direction
   >>> from neo4py.traversal import Traverser, Stop, Returnable, Order
 
-  class MyTraverser(Traverser):						####  UNTESTED  ####
+  class MyTraverser(Traverser):						
       types = [Direction.Incoming.Knows, Direction.Undirected.Likes]
-      is_stop = lambda pos: pos.node == my_node		#can use a python method
+      is_stop = lambda pos: pos.node == my_node		#can use a python method		####  LARGELY UNTESTED  ####
 							#pos is a TraversalPosition object
       is_returnable = Returnable.ALL			#or a java defined ReturnableEvaluator/StopEvaluator
 							# (these are faster)
@@ -190,13 +192,6 @@ Models, Django support, QuerySets, Aggregates
 
 In Progress
 
-
-Notes
------
-
-This is a work in progress.  Please let me know if stuff in this document fails or doesn't seem to be true.
-
-Thanks much.
 
 
 

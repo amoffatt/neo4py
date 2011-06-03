@@ -25,6 +25,10 @@ mkdir lib
 javac -d build/java-classes -classpath "${NEO4J_PATH}/lib/neo4j-kernel-1.3.jar" @classes.txt
 jar cf lib/neo4j-python-exts.jar -C build/java-classes org
 
+
+exit 0
+
+#not currently in use
 python -m $JCC_MOD	\
         --debug		\
         --shared	\
@@ -50,7 +54,6 @@ python -m $JCC_MOD	\
         --version 1.3				\
         --python neo4jcc			\
         --build					\
-        --install				\
 
 
 

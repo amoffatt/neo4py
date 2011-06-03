@@ -33,13 +33,10 @@ class _Direction(object):
     def __getattr__(self, attr):
         return self(attr)
     
-    @property
-    def name(self):  return self.__jobj__.name()
-    def __str__(self):  return self.__jobj__.name()
-    
-    Incoming = None
-    Outgoing = None
-    Both = None
+    @cached_property
+    def name(self):     return self.__jobj__.name()
+    def __str__(self):  return self.name
+
 
 class Direction:
     Incoming = _Direction(neo4j.Direction.INCOMING)

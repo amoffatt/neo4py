@@ -6,7 +6,7 @@ Created on May 27, 2011
 import os
 import unittest
 import shutil
-import neo4py as neo
+from neo4py import neo
 from neo4py.traversal import Traverser
 from neo4py.core import Direction
 
