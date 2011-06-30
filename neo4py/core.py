@@ -124,8 +124,11 @@ class PropertyContainer(object):
                 cnt += 1
         return cnt
     
+    def __nonzero__(self):
+        return True
+    
     def __str__(self):
-            return "{%d properties}" % len(self)
+            return "%s<%d>(%d properties)" % (self.__class__.__name__, self.id, len(self))
     
 class Node(PropertyContainer):
     def __init__(self, java_node):
@@ -150,8 +153,8 @@ class Node(PropertyContainer):
         except AttributeError:
             return self.relationships(attr)
         
-    def __str__(self):
-        return "Node(%s)" % super(Node, self).__str__()
+#    def __str__(self):
+#        return "Node(%s)" % super(Node, self).__str__()
     
 #    def traverse(self, types, order=None, stop_evaluator=None, return_evaluator=None):
 #        '''Alternative to subclassing Traverser, though slightly less efficient'''
@@ -189,8 +192,8 @@ class Relationship(PropertyContainer):
     def __eq__(self, other):
         return isinstance(other, Relationship) and other.id == self.id
     
-    def __str__(self):
-        return "Relationship(%s)" % super(Node, self).__str__()
+#    def __str__(self):
+#        return "Relationship(%s)" % super(Node, self).__str__()
     
 
 class RelationshipFactory(object):

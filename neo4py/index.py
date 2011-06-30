@@ -40,6 +40,14 @@ class _IndexFactory(object):
         
         return self._make(name, params)
     
+    def get_or_create(self, name, fulltext=False, provider="lucene"):
+        '''If index with name does not exist, create it with given properties,
+        else return existing instance (passed properties will be ignored)'''
+        try:
+            return self[name]
+        except KeyError:
+            return self.create(name, fulltext, provider)
+    
     def _exists(self, name):       #Override
         pass
     def _names(self):

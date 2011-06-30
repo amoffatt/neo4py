@@ -86,6 +86,33 @@ class cached_property(property):
         frame.__dict__[self.__f.__name__] = property(self.__f)
         return value
 
+class _ClassCachedPropertyWrapper(object):
+    def __init__(self, name, f):
+        self.__name = name
+        self.__f = f
+    def __get__(self, instance, owner):
+        v = self.__f(owner)
+        setattr(owner, self.__name, v)      # replace with calculated value
+        return v
+        
+
+def cached_classproperty(f):
+    return _ClassCachedPropertyWrapper(f.__name__, f)
+
+#def classproperty(f):
+#    def fget(instance):
+#        return f(instance.__class__)
+#    return property(fget)    
+
+def iterdescendents(cls, _seen=None):
+    if _seen is None: _seen = set()
+    for sub in cls.__subclasses__():
+        if sub not in _seen:
+            _seen.add(sub)
+            yield sub
+            for sub in iterdescendents(sub, _seen):
+                yield sub
+
 
 class BufferedIterator(object):
     def __init__(self, java_node_iter, buffer_size=ITER_BUFFER_SIZE, constructor=None):
@@ -152,6 +179,10 @@ def dict_to_jmap(d):
         jmap.put(k,v)
         
     return jmap
+
+
+def UnimplementedError(Exception):
+    pass
     
     
     
