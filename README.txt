@@ -8,9 +8,7 @@ Only tested with Neo4j 1.3 on OSX Snow Leopard, Python 2.6
 
 Notice
 ------
-This is a work in progress.  Please let me know if stuff in this document fails or doesn't seem to be true.
-
-Thanks much.
+This document is a work in progress.  Please let me know if stuff mentioned in it fails or doesn't seem to be true.
 
 
 Installation
